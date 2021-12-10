@@ -6,7 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-import { createElement, memo, useCallback } from 'react'
+import { createElement, memo, useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useTooltip } from '@nivo/tooltip'
 import { Mesh as BaseMesh } from '@nivo/voronoi'

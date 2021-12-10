@@ -10,7 +10,19 @@ import { memo } from 'react'
 import PropTypes from 'prop-types'
 import SlicesItem from './SlicesItem'
 
-const Slices = ({ slices, axis, debug, height, tooltip, current, setCurrent }) => {
+const Slices = ({
+    slices,
+    axis,
+    debug,
+    height,
+    tooltip,
+    current,
+    setCurrent,
+    setSliceId,
+    setCurrentlyHovered,
+    currentlyHovered,
+    onClick,
+}) => {
     return slices.map(slice => (
         <SlicesItem
             key={slice.id}
@@ -21,6 +33,11 @@ const Slices = ({ slices, axis, debug, height, tooltip, current, setCurrent }) =
             tooltip={tooltip}
             setCurrent={setCurrent}
             isCurrent={current !== null && current.id === slice.id}
+            setSliceId={setSliceId}
+            currentlyHovered={currentlyHovered}
+            setCurrentlyHovered={setCurrentlyHovered}
+            current={current}
+            onClick={onClick}
         />
     ))
 }

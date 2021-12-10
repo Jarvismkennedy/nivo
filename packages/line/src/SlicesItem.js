@@ -6,33 +6,73 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-import { createElement, memo, useCallback } from 'react'
+import { createElement, memo, useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useTooltip } from '@nivo/tooltip'
 
-const SlicesItem = ({ slice, axis, debug, tooltip, isCurrent, setCurrent }) => {
-    const { showTooltipFromEvent, hideTooltip } = useTooltip()
+const SlicesItem = ({
+    slice,
+    axis,
+    debug,
+    tooltip,
+    isCurrent,
+    currentlyHovered,
+    setSliceId,
+    current,
+    setCurrent,
+    setCurrentlyHovered,
+    height,
+    onClick,
+}) => {
+    const { showTooltipFromEvent, showTooltipAt, hideTooltip } = useTooltip()
+
+    const showSynchTooltip = useCallback(() => {
+        if (isCurrent) {
+            showTooltipAt(createElement(tooltip, { slice, axis }), [slice.x, height / 2], 'top')
+        }
+    }, [slice, isCurrent, currentlyHovered, showTooltipAt, tooltip])
+
+    useEffect(() => {
+        if (current === null) {
+            hideTooltip()
+        }
+    }, [current, hideTooltip])
+
+    useEffect(() => {
+        showSynchTooltip()
+    }, [showSynchTooltip])
 
     const handleMouseEnter = useCallback(
         event => {
-            showTooltipFromEvent(createElement(tooltip, { slice, axis }), event, 'right')
+            showTooltipAt(createElement(tooltip, { slice, axis }), [slice.x, height / 2], 'top')
+            setCurrentlyHovered(true)
+            setSliceId && setSliceId(slice.id)
             setCurrent(slice)
         },
         [showTooltipFromEvent, tooltip, slice]
     )
 
-    const handleMouseMove = useCallback(
-        event => {
-            showTooltipFromEvent(createElement(tooltip, { slice, axis }), event, 'right')
-        },
-        [showTooltipFromEvent, tooltip, slice]
-    )
+    // const handleMouseMove = useCallback(
+    //     event => {
+    //         //showTooltipFromEvent(createElement(tooltip, { slice, axis }), event, 'right')
+    //         setPointIndex(slice.id)
+    //     },
+    //     [showTooltipFromEvent, tooltip, slice, setPointIndex]
+    // )
 
     const handleMouseLeave = useCallback(() => {
         hideTooltip()
+        setSliceId && setSliceId(null)
+        setCurrentlyHovered(false)
         setCurrent(null)
-    }, [hideTooltip])
+    }, [hideTooltip, setSliceId, setCurrentlyHovered])
 
+    const handleClick = useCallback(
+        event => {
+            onClick && onClick(slice, event)
+        },
+        [onClick]
+    )
     return (
         <rect
             x={slice.x0}
@@ -45,8 +85,9 @@ const SlicesItem = ({ slice, axis, debug, tooltip, isCurrent, setCurrent }) => {
             fill="red"
             fillOpacity={isCurrent && debug ? 0.35 : 0}
             onMouseEnter={handleMouseEnter}
-            onMouseMove={handleMouseMove}
+            // onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            onClick={handleClick}
         />
     )
 }

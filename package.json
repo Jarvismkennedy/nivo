@@ -95,6 +95,7 @@
     "website"
   ],
   "dependencies": {
-    "npm-normalize-package-bin": "^1.0.1"
+    "npm-normalize-package-bin": "^1.0.1",
+    "yarn": "^1.22.11"
   }
 }

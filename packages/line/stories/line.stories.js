@@ -6,7 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-import { Component, useState, useEffect } from 'react'
+import { Component, useState, useEffect, useCallback } from 'react'
 import range from 'lodash/range'
 import last from 'lodash/last'
 import { storiesOf } from '@storybook/react'
@@ -1066,3 +1066,38 @@ stories.add('area gradients', () => (
         fill={[{ match: '*', id: 'gradientA' }]}
     />
 ))
+
+const synchedToolTipProps = {
+    width: 900,
+    height: 400,
+    margin: { top: 20, right: 20, bottom: 60, left: 80 },
+    data,
+    animate: false,
+    isInteractive: true,
+    enableCrosshair: true,
+    enableSlices: 'x',
+}
+
+function SynchTooltips() {
+    const [pointIndex, setPointIndex] = useState(null)
+
+    let count = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    return (
+        <>
+            {count.map(i => (
+                <Line
+                    {...synchedToolTipProps}
+                    yScale={{
+                        type: 'linear',
+                    }}
+                    curve={select('curve', curveOptions, 'linear')}
+                    sliceId={pointIndex}
+                    setSliceId={setPointIndex}
+                    onClick={props => console.log(props)}
+                />
+            ))}
+        </>
+    )
+}
+
+stories.add('Synchronized tooltips', () => <SynchTooltips />)

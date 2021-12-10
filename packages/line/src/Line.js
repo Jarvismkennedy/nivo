@@ -6,7 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-import { Fragment, useState, useMemo } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import {
     bindDefs,
     withContainer,
@@ -86,6 +86,8 @@ const Line = props => {
         onClick,
 
         tooltip,
+        sliceId,
+        setSliceId,
 
         enableSlices,
         debugSlices,
@@ -135,6 +137,27 @@ const Line = props => {
 
     const [currentPoint, setCurrentPoint] = useState(null)
     const [currentSlice, setCurrentSlice] = useState(null)
+
+    const [currentlyHovered, setCurrentlyHovered] = useState(false)
+    const [sliceByIndex, setSliceByIndex] = useState({})
+
+    useEffect(() => {
+        if (!slices) {
+            return
+        }
+
+        let sliceDict = {}
+        for (let i = 0; i < slices.length; i++) {
+            sliceDict[slices[i].id] = slices[i]
+        }
+        setSliceByIndex(sliceDict)
+    }, [data, slices])
+
+    useEffect(() => {
+        if (!currentlyHovered && setSliceId) {
+            setCurrentSlice(sliceByIndex[sliceId] || null)
+        }
+    }, [sliceId, sliceByIndex])
 
     const layerById = {
         grid: (
@@ -220,6 +243,10 @@ const Line = props => {
                 tooltip={sliceTooltip}
                 current={currentSlice}
                 setCurrent={setCurrentSlice}
+                setCurrentlyHovered={setCurrentlyHovered}
+                setSliceId={setSliceId}
+                currentlyHovered={currentlyHovered}
+                onClick={onClick}
             />
         )
     }
@@ -267,7 +294,6 @@ const Line = props => {
             )
         }
     }
-
     if (isInteractive && useMesh && enableSlices === false) {
         layerById.mesh = (
             <Mesh
