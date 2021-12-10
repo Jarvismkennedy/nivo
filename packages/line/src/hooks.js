@@ -31,11 +31,10 @@ export const useAreaGenerator = ({ curve, yScale, areaBaselineValue }) => {
             .defined(d => d.x !== null && d.y !== null)
             .x(d => d.x)
             .y1(d => d.y)
+            .y0(d => d.y0)
             .curve(curveFromProp(curve))
-            .y0(yScale(areaBaselineValue))
     }, [curve, yScale, areaBaselineValue])
 }
-
 const usePoints = ({ series, getPointColor, getPointBorderColor, formatX, formatY }) => {
     return useMemo(() => {
         return series.reduce((acc, serie) => {
@@ -153,6 +152,7 @@ export const useLine = ({
     pointColor = LineDefaultProps.pointColor,
     pointBorderColor = LineDefaultProps.pointBorderColor,
     enableSlices = LineDefaultProps.enableSlicesTooltip,
+    enableAreaBetween = false,
 }) => {
     const formatX = useValueFormatter(xFormat)
     const formatY = useValueFormatter(yFormat)
@@ -173,7 +173,6 @@ export const useLine = ({
             ),
         [data, hiddenIds, xScaleSpec, yScaleSpec, width, height]
     )
-
     const { legendData, series } = useMemo(() => {
         const dataWithColor = data.map(line => ({
             id: line.id,

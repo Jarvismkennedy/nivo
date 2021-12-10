@@ -8,7 +8,7 @@ import {
 } from 'd3-scale'
 import { TIME_PRECISION } from './timeHelpers'
 
-export type ScaleAxis = 'x' | 'y'
+export type ScaleAxis = 'x' | 'y' | 'y0'
 export type OtherScaleAxis<Axis extends ScaleAxis> = Axis extends 'x' ? 'y' : 'x'
 
 export type NumericValue = { valueOf(): number }
@@ -126,6 +126,7 @@ export type Series<XValue extends ScaleValue, YValue extends ScaleValue> = {
         data: {
             x: XValue | null
             y: YValue | null
+            y0: YValue | null
         }
     }[]
 }[]

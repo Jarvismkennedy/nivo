@@ -28,7 +28,7 @@ const commonProperties = {
     enableSlices: 'x',
 }
 
-const curveOptions = ['linear', 'monotoneX', 'step', 'stepBefore', 'stepAfter']
+const curveOptions = ['linear', 'monotoneX', 'step', 'stepBefore', 'stepAfter', 'natural']
 
 const CustomSymbol = ({ size, color, borderWidth, borderColor }) => (
     <g>
@@ -1099,5 +1099,61 @@ function SynchTooltips() {
         </>
     )
 }
-
 stories.add('Synchronized tooltips', () => <SynchTooltips />)
+
+const minData = new Array(10).fill(0).map((_, i) => ({
+    x: i,
+    y: Math.random() * 10 + 1,
+}))
+const maxData = new Array(10).fill(0).map((_, i) => ({
+    x: i,
+    y: Math.random() * 20 + minData[i].y,
+}))
+const avgData = new Array(10).fill(0).map((_, i) => ({
+    x: i,
+    y: (maxData[i].y + minData[i].y) / 2,
+}))
+for (let i = 0; i < 10; i++) {
+    maxData[i]['y0'] = avgData[i].y
+    avgData[i]['y0'] = avgData[i].y
+    minData[i]['y0'] = avgData[i].y
+}
+const areaData = [
+    { id: 'max', data: maxData },
+    { id: 'min', data: minData },
+    { id: 'avg', data: avgData },
+]
+const areaTooltipProps = {
+    colors: { scheme: 'category10' },
+    width: 900,
+    height: 400,
+    margin: { top: 20, right: 20, bottom: 60, left: 80 },
+    data: areaData,
+    animate: false,
+    isInteractive: true,
+    enableCrosshair: true,
+    enableSlices: 'x',
+}
+// Fill area between
+function AreaBetween() {
+    const [pointIndex, setPointIndex] = useState(null)
+    return (
+        <>
+            <Line
+                {...areaTooltipProps}
+                yScale={{
+                    type: 'linear',
+                }}
+                xScale={{ type: 'linear' }}
+                curve={'natural'}
+                enableArea
+                sliceId={pointIndex}
+                setSliceId={setPointIndex}
+                onClick={props => console.log(props)}
+                enablePoints={false}
+            />
+        </>
+    )
+}
+
+stories.add('Fill Between Lines', () => <AreaBetween />)

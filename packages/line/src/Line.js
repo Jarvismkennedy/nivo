@@ -55,6 +55,7 @@ const Line = props => {
 
         lineWidth,
         enableArea,
+        enableAreaBetween,
         areaOpacity,
         areaBlendMode,
 
@@ -129,6 +130,7 @@ const Line = props => {
         pointColor,
         pointBorderColor,
         enableSlices,
+        enableAreaBetween,
     })
 
     const theme = useTheme()

@@ -28,6 +28,7 @@ interface Data {
     xStacked: number | null
     y: number
     yStacked: number | null
+    y0: number
 
     // Allow template literal `xStacked/yStacked` to be set on line 213
     [key: string]: number | null
@@ -43,6 +44,7 @@ interface ComputedXYSeries extends InputXYSeries {
         position: {
             x: ScaleValue | null
             y: ScaleValue | null
+            y0: ScaleValue | null
         }
     }>
 }
@@ -89,7 +91,6 @@ export const computeXYScalesForSeries = (
         ...serie,
         data: serie.data.map(d => ({ data: { ...d } })),
     })) as ComputedXYSeries[]
-
     const xy = generateSeriesXY(series, xScaleSpec, yScaleSpec)
     if ('stacked' in xScaleSpec && xScaleSpec.stacked === true) {
         stackX(xy as StackedXY, series)
@@ -100,6 +101,7 @@ export const computeXYScalesForSeries = (
 
     const xScale = computeScale(xScaleSpec, xy.x, width, 'x')
     const yScale = computeScale(yScaleSpec, xy.y, height, 'y')
+    // const y0Scale = computeScale(yScaleSpec, xy.y0, height, 'y0')
 
     series.forEach(serie => {
         serie.data.forEach(d => {
@@ -120,6 +122,7 @@ export const computeXYScalesForSeries = (
                         : d.data.y === null
                         ? null
                         : yScale(d.data.y) ?? null,
+                y0: yScale(d.data.y0) ?? null,
             }
         })
     })
@@ -139,6 +142,7 @@ export const generateSeriesXY = <XValue extends ScaleValue, YValue extends Scale
 ) => ({
     x: generateSeriesAxis<'x', XValue>(series, 'x', xScaleSpec),
     y: generateSeriesAxis<'y', YValue>(series, 'y', yScaleSpec),
+    y0: generateSeriesAxis<'y0', YValue>(series, 'y0', yScaleSpec),
 })
 
 /**
