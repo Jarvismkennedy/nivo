@@ -1,6 +1,6 @@
 {
   "name": "@nivo/core",
-  "version": "0.73.0",
+  "version": "0.73.2",
   "license": "MIT",
   "author": {
     "name": "Raphaël Benitte",
@@ -34,10 +34,10 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
-    "@nivo/tooltip": "0.73.0"
+    "@nivo/tooltip": "0.73.2"
   },
   "peerDependencies": {
-    "@nivo/tooltip": "0.73.0",
+    "@nivo/tooltip": "0.73.2",
     "prop-types": ">= 15.5.10 < 16.0.0",
     "react": ">= 16.14.0 < 18.0.0"
   },
