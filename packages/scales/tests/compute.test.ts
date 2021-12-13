@@ -634,6 +634,11 @@ describe('computeXYScalesForSeries', () => {
                 "max": -Infinity,
                 "min": Infinity,
               },
+              "y0": Object {
+                "all": Array [],
+                "max": -Infinity,
+                "min": Infinity,
+              },
               "yScale": [Function],
             }
         `)
