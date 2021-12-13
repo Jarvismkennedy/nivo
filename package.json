@@ -85,7 +85,7 @@
   "scripts": {
     "make:init": "make init",
     "prepare": "yarn release:prepare",
-    "release:prepare": "node scripts/bump-peer-deps.js && yarn changelog",
+    "release:prepare": "node scripts/bump-peer-deps.js",
     "version": "yarn release:prepare"
   },
   "workspaces": [
