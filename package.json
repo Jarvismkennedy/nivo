@@ -83,7 +83,6 @@
     "react-dom": "17.0.2"
   },
   "scripts": {
-    "prepare": "npm run build",
     "changelog": "rm CHANGELOG.md && node scripts/generate-changelog.js",
     "make:init": "make init",
     "prepublish": "yarn release:prepare",
