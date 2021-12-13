@@ -83,10 +83,9 @@
     "react-dom": "17.0.2"
   },
   "scripts": {
-    "prepare": "make packages-build",
     "changelog": "rm CHANGELOG.md && node scripts/generate-changelog.js",
     "make:init": "make init",
-    "prepublishOnly": "yarn release:prepare",
+    "prepare": "yarn release:prepare",
     "release:prepare": "node scripts/bump-peer-deps.js && yarn changelog",
     "version": "yarn release:prepare"
   },
