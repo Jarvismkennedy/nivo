@@ -1,14 +1,6 @@
-/*
- * This file is part of the nivo project.
- *
- * Copyright 2016-present, Raphaël Benitte.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 import React from 'react'
 import { ResponsiveBarCanvas } from '@nivo/bar'
-import ComponentTemplate from '../../components/components/ComponentTemplate'
+import { ComponentTemplate } from '../../components/components/ComponentTemplate'
 import meta from '../../data/components/bar/meta.yml'
 import { generateHeavyDataSet } from '../../data/components/bar/generator'
 import mapper from '../../data/components/bar/mapper'

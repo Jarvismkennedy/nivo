@@ -1,15 +1,7 @@
-/*
- * This file is part of the nivo project.
- *
- * Copyright 2016-present, Raphaël Benitte.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 import React from 'react'
 import { ResponsiveTimeRange, timeRangeDefaultProps } from '@nivo/calendar'
-import { generateOrderedDayCounts } from '@nivo/generators'
-import ComponentTemplate from '../../components/components/ComponentTemplate'
+import { generateDayCounts } from '@nivo/generators'
+import { ComponentTemplate } from '../../components/components/ComponentTemplate'
 import meta from '../../data/components/time-range/meta.yml'
 import mapper from '../../data/components/time-range/mapper'
 import { groups } from '../../data/components/time-range/props'
@@ -20,7 +12,7 @@ const Tooltip = data => {
 
 const from = new Date(2018, 3, 1)
 const to = new Date(2018, 7, 12)
-const generateData = () => generateOrderedDayCounts(from, to)
+const generateData = () => generateDayCounts(from, to)
 
 const initialProperties = {
     from: '2018-04-01',
@@ -65,8 +57,8 @@ const initialProperties = {
             itemHeight: 36,
             itemsSpacing: 14,
             itemDirection: 'right-to-left',
-            translateX: -85,
-            translateY: -240,
+            translateX: -60,
+            translateY: -60,
             symbolSize: 20,
         },
     ],

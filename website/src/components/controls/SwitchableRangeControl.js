@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import pick from 'lodash/pick'
-import Control from './Control'
-import PropertyHeader from './PropertyHeader'
+import { Control } from './Control'
+import { PropertyHeader } from './PropertyHeader'
 import { Help } from './Help'
-import TextInput from './TextInput'
-import Switch from './Switch'
+import { TextInput } from './TextInput'
+import { Switch } from './Switch'
 
 const SwitchRow = styled.div`
     display: flex;

@@ -121,6 +121,10 @@ export interface ScaleTime<Input> extends D3ScaleTime<Input, number> {
     useUTC: boolean
 }
 
+export type AnyScale = Scale<any, any>
+
+export type ScaleWithBandwidth = ScaleBand<any> | ScalePoint<any>
+
 export type Series<XValue extends ScaleValue, YValue extends ScaleValue> = {
     data: {
         data: {
@@ -131,6 +135,7 @@ export type Series<XValue extends ScaleValue, YValue extends ScaleValue> = {
     }[]
 }[]
 
+// A serie containing data for a specific axis
 export type SerieAxis<Axis extends ScaleAxis, Value extends ScaleValue> = {
     data: {
         data: Record<Axis, Value | null>
@@ -144,3 +149,15 @@ export type ComputedSerieAxis<Value extends ScaleValue> = {
     max: Value
     maxStacked?: Value
 }
+
+export type TicksSpec<Value extends ScaleValue> =
+    // exact number of ticks, please note that
+    // depending on the current range of values,
+    // you might not get this exact count
+    | number
+    // string is used for Date based scales,
+    // it can express a time interval,
+    // for example: every 2 weeks
+    | string
+    // override scale ticks with custom explicit values
+    | Value[]

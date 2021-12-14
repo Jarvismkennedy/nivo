@@ -1,14 +1,6 @@
-/*
- * This file is part of the nivo project.
- *
- * Copyright 2016-present, Raphaël Benitte.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 import React from 'react'
 import { generateSankeyData } from '@nivo/generators'
-import SEO from '../../components/seo'
+import { Seo } from '../../components/Seo'
 import ApiClient from '../../components/components/api-client/ApiClient'
 import { groups } from '../../data/components/sankey/props'
 import mapper from '../../data/components/sankey/mapper'
@@ -19,7 +11,7 @@ const data = generateSankeyData({ nodeCount: 6, maxIterations: 8 })
 const SankeyApi = () => {
     return (
         <>
-            <SEO title="Sankey HTTP API" keywords={[...meta.Sankey.tags, 'HTTP API']} />
+            <Seo title="Sankey HTTP API" keywords={[...meta.Sankey.tags, 'HTTP API']} />
             <ApiClient
                 componentName="Sankey"
                 chartClass="sankey"
@@ -32,6 +24,7 @@ const SankeyApi = () => {
                     width: 1200,
                     height: 800,
                     data: JSON.stringify(data, null, '  '),
+                    valueFormat: { format: '', enabled: false },
                     margin: {
                         top: 20,
                         right: 20,
@@ -46,6 +39,7 @@ const SankeyApi = () => {
 
                     nodeOpacity: 1,
                     nodeHoverOpacity: 1,
+                    nodeHoverOthersOpacity: 0.35,
                     nodeThickness: 18,
                     nodeInnerPadding: 3,
                     nodeSpacing: 24,
@@ -54,6 +48,7 @@ const SankeyApi = () => {
                         from: 'color',
                         modifiers: [['darker', 0.8]],
                     },
+                    nodeBorderRadius: 0,
 
                     linkOpacity: 0.5,
                     linkHoverOpacity: 0.6,
