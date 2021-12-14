@@ -1,18 +1,10 @@
-/*
- * This file is part of the nivo project.
- *
- * (c) 2016 Raphaël Benitte
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled, { keyframes } from 'styled-components'
 import ApiPreview from './ApiPreview'
 import media from '../../../theming/mediaQueries'
 import { useTheme } from '../../../theming/context'
-import CodeBlock from '../../CodeBlock'
+import { CodeBlock } from '../../CodeBlock'
 
 const tabs = ['preview', 'body', 'data']
 

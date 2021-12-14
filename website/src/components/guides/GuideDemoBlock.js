@@ -1,17 +1,9 @@
-/*
- * This file is part of the nivo project.
- *
- * (c) 2016 Raphaël Benitte
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import media from '../../theming/mediaQueries'
-import CollapsibleCard from '../CollapsibleCard'
+import { CollapsibleCard } from '../CollapsibleCard'
 import ControlsGroup from '../controls/ControlsGroup'
-import Highlight from '../Highlight'
+import { Highlight } from '../Highlight'
 
 const Container = styled.div`
     display: grid;

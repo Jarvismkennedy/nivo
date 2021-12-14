@@ -1,15 +1,7 @@
-/*
- * This file is part of the nivo project.
- *
- * Copyright 2016-present, Raphaël Benitte.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 import React from 'react'
 import { Link } from 'gatsby'
 import Layout from '../../components/Layout'
-import SEO from '../../components/seo'
+import { Seo } from '../../components/Seo'
 import PageContent from '../../components/PageContent'
 import PatternsIllustrations from '../../components/guides/patterns/PatternsIllustrations'
 import PatternsExample from '../../components/guides/patterns/PatternsExample'
@@ -20,7 +12,7 @@ import { DescriptionBlock } from '../../components/styled'
 
 const Patterns = () => (
     <Layout>
-        <SEO title="Patterns Guide" />
+        <Seo title="Patterns Guide" />
         <PageContent>
             <div className="guide__header">
                 <h1>Patterns</h1>

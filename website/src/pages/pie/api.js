@@ -1,14 +1,6 @@
-/*
- * This file is part of the nivo project.
- *
- * Copyright 2016-present, Raphaël Benitte.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 import React from 'react'
 import { generateProgrammingLanguageStats } from '@nivo/generators'
-import SEO from '../../components/seo'
+import { Seo } from '../../components/Seo'
 import ApiClient from '../../components/components/api-client/ApiClient'
 import { groups } from '../../data/components/pie/props'
 import mapper from '../../data/components/pie/mapper'
@@ -26,7 +18,7 @@ const data = generateData()
 const PieApi = () => {
     return (
         <>
-            <SEO title="Pie HTTP API" keywords={[...meta.Pie.tags, 'HTTP API']} />
+            <Seo title="Pie HTTP API" keywords={[...meta.Pie.tags, 'HTTP API']} />
             <ApiClient
                 componentName="Pie"
                 chartClass="pie"

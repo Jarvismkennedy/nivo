@@ -1,17 +1,9 @@
-/*
- * This file is part of the nivo project.
- *
- * Copyright 2016-present, Raphaël Benitte.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 import React from 'react'
 import range from 'lodash/range'
 import random from 'lodash/random'
 import { patternDotsDef, patternLinesDef } from '@nivo/core'
 import { ResponsiveAreaBump, AreaBumpDefaultProps } from '@nivo/bump'
-import ComponentTemplate from '../../components/components/ComponentTemplate'
+import { ComponentTemplate } from '../../components/components/ComponentTemplate'
 import meta from '../../data/components/area-bump/meta.yml'
 import { groups } from '../../data/components/area-bump/props'
 import mapper from '../../data/components/area-bump/mapper'

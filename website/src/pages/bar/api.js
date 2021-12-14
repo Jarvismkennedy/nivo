@@ -1,13 +1,5 @@
-/*
- * This file is part of the nivo project.
- *
- * Copyright 2016-present, Raphaël Benitte.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 import React from 'react'
-import SEO from '../../components/seo'
+import { Seo } from '../../components/Seo'
 import ApiClient from '../../components/components/api-client/ApiClient'
 import { groups } from '../../data/components/bar/props'
 import meta from '../../data/components/bar/meta.yml'
@@ -19,7 +11,7 @@ const { data, keys } = generateLightDataSet()
 const BarApi = () => {
     return (
         <>
-            <SEO title="Bar HTTP API" keywords={[...meta.Bar.tags, 'HTTP API']} />
+            <Seo title="Bar HTTP API" keywords={[...meta.Bar.tags, 'HTTP API']} />
             <ApiClient
                 componentName="Bar"
                 chartClass="bar"

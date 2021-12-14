@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { Interpolation, SpringConfig } from '@react-spring/web'
+import { CurveFactory } from 'd3-shape'
+import { ComponentType } from 'react'
 
 declare module '@nivo/core' {
     export type DatumValue = string | number | Date
@@ -209,16 +211,6 @@ declare module '@nivo/core' {
         fill?: { id: string; match: Record<string, unknown> | SvgFillMatcher<T> | '*' }[]
     }
 
-    export interface CartesianMarkerProps {
-        axis: 'x' | 'y'
-        value: DatumValue
-        legend?: string
-        legendOrientation?: 'horizontal' | 'vertical'
-        legendPosition?: BoxAlign
-        lineStyle?: Partial<React.CSSProperties>
-        textStyle?: Partial<React.CSSProperties>
-    }
-
     export type CssMixBlendMode =
         | 'normal'
         | 'multiply'
@@ -263,6 +255,7 @@ declare module '@nivo/core' {
             color: string
             opacity?: number
         }[]
+        gradientTransform?: string
     }
 
     export type PatternDotsDef = {
@@ -324,6 +317,12 @@ declare module '@nivo/core' {
     export function degreesToRadians(degrees: number): number
     export function radiansToDegrees(radians: number): number
     export function absoluteAngleDegrees(degrees: number): number
+    export function normalizeAngle(degrees: number): number
+    export function clampArc(
+        startAngle: number,
+        endAngle: number,
+        length?: number
+    ): [number, number]
 
     type Accessor<T extends keyof U, U> = T extends string ? U[T] : never
 
@@ -365,7 +364,6 @@ declare module '@nivo/core' {
         motionDamping?: number
         motionConfig?: string | SpringConfig
     }
-
     type ContainerType = (props: React.PropsWithChildren<ContainerProps>) => JSX.Element
     export const Container: ContainerType
 
@@ -392,13 +390,18 @@ declare module '@nivo/core' {
         y: number
     }
 
-    export type ValueFormat<Value> =
-        // d3 formatter
-        | string
+    export type ValueFormat<Value, Context = void> =
+        | string // d3 formatter
         // explicit formatting function
-        | ((value: Value) => string)
-    export function getValueFormatter<Value>(format?: ValueFormat<Value>): (value: Value) => string
-    export function useValueFormatter<Value>(format?: ValueFormat<Value>): (value: Value) => string
+        | (Context extends void
+              ? (value: Value) => string
+              : (value: Value, context: Context) => string)
+    export function getValueFormatter<Value, Context = void>(
+        format?: ValueFormat<Value, Context>
+    ): Context extends void ? (value: Value) => string : (value: Value, context: Context) => string
+    export function useValueFormatter<Value, Context = void>(
+        format?: ValueFormat<Value, Context>
+    ): Context extends void ? (value: Value) => string : (value: Value, context: Context) => string
 
     export type PropertyAccessor<Datum, Value> =
         // path to use with `lodash.get()`
@@ -421,4 +424,115 @@ declare module '@nivo/core' {
         cursorX: number,
         cursorY: number
     ): boolean
+
+    export interface CartesianMarkerProps<V extends DatumValue = DatumValue> {
+        axis: 'x' | 'y'
+        value: V
+        legend?: string
+        legendOrientation?: 'horizontal' | 'vertical'
+        legendPosition?: BoxAlign
+        lineStyle?: Partial<React.CSSProperties>
+        textStyle?: Partial<React.CSSProperties>
+    }
+    interface CartesianMarkersProps<
+        X extends DatumValue = DatumValue,
+        Y extends DatumValue = DatumValue
+    > {
+        width: number
+        height: number
+        xScale: (value: X) => number
+        yScale: (value: Y) => number
+        markers: CartesianMarkerProps<X | Y>[]
+    }
+    type CartesianMarkersType = <
+        X extends DatumValue = DatumValue,
+        Y extends DatumValue = DatumValue
+    >(
+        props: CartesianMarkersProps<X, Y>
+    ) => JSX.Element
+    export const CartesianMarkers: CartesianMarkersType
+
+    export type CurveFactoryId =
+        | 'basis'
+        | 'basisClosed'
+        | 'basisOpen'
+        | 'bundle'
+        | 'cardinal'
+        | 'cardinalClosed'
+        | 'cardinalOpen'
+        | 'catmullRom'
+        | 'catmullRomClosed'
+        | 'catmullRomOpen'
+        | 'linear'
+        | 'linearClosed'
+        | 'monotoneX'
+        | 'monotoneY'
+        | 'natural'
+        | 'step'
+        | 'stepAfter'
+        | 'stepBefore'
+
+    // Curve factories compatible d3 line shape generator
+    export type LineCurveFactoryId =
+        | 'basis'
+        | 'cardinal'
+        | 'catmullRom'
+        | 'linear'
+        | 'monotoneX'
+        | 'monotoneY'
+        | 'natural'
+        | 'step'
+        | 'stepAfter'
+        | 'stepBefore'
+
+    // Curve factories compatible d3 area shape generator
+    export type AreaCurveFactoryId =
+        | 'basis'
+        | 'cardinal'
+        | 'catmullRom'
+        | 'linear'
+        | 'monotoneX'
+        | 'monotoneY'
+        | 'natural'
+        | 'step'
+        | 'stepAfter'
+        | 'stepBefore'
+
+    export type ClosedCurveFactoryId =
+        | 'basisClosed'
+        | 'cardinalClosed'
+        | 'catmullRomClosed'
+        | 'linearClosed'
+    export const closedCurvePropKeys: ClosedCurveFactoryId[]
+
+    export const curveFromProp: (interpolation: CurveFactoryId) => CurveFactory
+
+    export const useCurveInterpolation: (interpolation: CurveFactoryId) => CurveFactory
+
+    export interface DotsItemSymbolProps {
+        size: number
+        color: string
+        borderWidth: number
+        borderColor: string
+    }
+    export type DotsItemSymbolComponent = React.FunctionComponent<DotsItemSymbolProps>
+
+    export interface DotsItemProps<D = any> {
+        datum: D
+        x: number
+        y: number
+        size: number
+        color: string
+        borderWidth: number
+        borderColor: string
+        label?: string | number
+        labelTextAnchor?: 'start' | 'middle' | 'end'
+        labelYOffset?: number
+        symbol?: DotsItemSymbolComponent
+    }
+    export const DotsItem: React.FunctionComponent<DotsItemProps>
+
+    export type ExtractProps<TComponent> = TComponent extends ComponentType<infer TProps>
+        ? TProps
+        : never
 }

@@ -1,14 +1,6 @@
-/*
- * This file is part of the nivo project.
- *
- * Copyright 2016-present, Raphaël Benitte.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 import React from 'react'
 import { generateWinesTastes } from '@nivo/generators'
-import SEO from '../../components/seo'
+import { Seo } from '../../components/Seo'
 import ApiClient from '../../components/components/api-client/ApiClient'
 import { groups } from '../../data/components/radar/props'
 import mapper from '../../data/components/radar/mapper'
@@ -19,7 +11,7 @@ const { data, keys } = generateWinesTastes()
 const RadarApi = () => {
     return (
         <>
-            <SEO title="Radar HTTP API" keywords={[...meta.Radar.tags, 'HTTP API']} />
+            <Seo title="Radar HTTP API" keywords={[...meta.Radar.tags, 'HTTP API']} />
             <ApiClient
                 componentName="Radar"
                 chartClass="radar"
@@ -35,6 +27,7 @@ const RadarApi = () => {
                     keys,
                     indexBy: 'taste',
                     maxValue: 'auto',
+                    valueFormat: { format: '>-.2f', enabled: true },
 
                     margin: {
                         top: 70,
