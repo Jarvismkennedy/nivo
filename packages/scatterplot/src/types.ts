@@ -22,6 +22,7 @@ export type ScatterPlotValue = number | string | Date
 export interface ScatterPlotDatum {
     x: ScatterPlotValue
     y: ScatterPlotValue
+    y0: ScatterPlotValue
 }
 
 export type ScatterPlotRawSerie<RawDatum extends ScatterPlotDatum> = {
