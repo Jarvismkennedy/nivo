@@ -156,7 +156,9 @@ const Line = props => {
     }, [data, slices])
 
     useEffect(() => {
-        if (!currentlyHovered && setSliceId) {
+        if (sliceId == null) {
+            setCurrentSlice(null)
+        } else if (!currentlyHovered && setSliceId) {
             setCurrentSlice(sliceByIndex[sliceId] || null)
         }
     }, [sliceId, sliceByIndex])
